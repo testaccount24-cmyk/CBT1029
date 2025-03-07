@@ -1,0 +1,26 @@
+)ATTR DEFAULT(%+_)
+% TYPE(TEXT) INTENS(HIGH)
++ TYPE(TEXT) INTENS(LOW) COLOR(GREEN)
+_ TYPE(INPUT) INTENS(HIGH) CAPS(ON) PAD(_) COLOR(TURQ)
+# TYPE(INPUT) INTENS(HIGH) CAPS(OFF) COLOR(TURQ)
+` TYPE(INPUT) INTENS(HIGH) CAPS(ON) COLOR(yellow)
+! TYPE(TEXT) INTENS(HIGH) CAPS(OFF) COLOR(PINK) HILITE(USCORE)
+¢ TYPE(OUTPUT) INTENS(HIGH) CAPS(OFF) COLOR(RED)
+)BODY EXPAND(\\) CMD(ZCMD)
++\-\%REXX DEBUG+\-\
+%====>_ZCMD \ \ +
+¢zmsg                                                           +              +
++
++\ \%PF3-Exit    PF7-Up PF8-Down+\ \
++
+!C!  Variable        + !   Data                                                +
+)MODEL
+_z`vname             +=#vdata                                                  +
+)INIT
+  .ZVARS = '( OP )'
+)PROC
+  &ZAID = .PFKEY
+  &ZRESP = .RESP
+  &ZLCURSOR = .CURSOR
+  &ZCSRPOS = .CSRPOS
+)END

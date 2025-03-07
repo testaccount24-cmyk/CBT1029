@@ -1,0 +1,100 @@
+ Re: New tool - RXP
+Subject:  )10 New tool - RXP
+From:     Daniel Gaeta <dfgaeta@me.com>
+Date:     2/21/2022, 2:45 PM
+To:       Sam Golob <sbgolob@cbttape.org>
+
+Hi Sam,
+
+The RXP is a toolbox and I have used in lot of other tools for my
+production and test environment.
+
+It runs like our famous EXECIO and there are support to VSAM
+datasets and there are some additional functions. It was coded
+using C/370 and I am planning to port this code to modern C/C++.
+
+
+---RXP---WRITE
+--- ddname/dataset ------ ÝSTACK¨ STEM <stemname>
+---- ÝFILTER varexpr varwhere¨ ÝDCB <vardcb>¨ ÝUPDATE|DELETE¨
+----------READ
+----------EXTEND
+----------VREAD
+----------VWRITE
+----------VINFO
+----------DEBUG
+
+Parameters :
+
+For PDS/PS datasets :
+
+WRITE/READ/EXTEND - perform a read/write/extend(append). The tool
+allocate, open, close and release the dataset.   We can use the
+dataset name or ddname. To ddname is necessary use the Runtime C
+style (//DD:ddname).
+
+VREAD/VWRITE - perform a read/write/update/delete in VSAM
+datasets. The   additional parameters UPDATE and DELETE are used
+in VREAD action. The VSAM record are moved from/to stem variables
+or data stack area. For VSAM IO, the variables _vsamrc ,
+_vsamfdbk, _deleted, _updated, _read and _selected will be
+updated.
+
+VINFO - collect information about VSAM cluster. Some variables
+are created with VSAM collected information (_vsamdevice,
+_vsamtype, _vsammaxrec, _vsamblksize, _vsamkeylen, _vsamkeyrkp,
+_vsamdsn, _vsamrc, _vsamfdbk)
+
+DCB vardcb - the vardcb is an optional parameter and it allow to
+change DCB in C fopen function.
+
+STEM stemname - stemname target that will move data from/to.
+
+STACK - like STEM but it will use data stack area
+
+DEBUG - you just need to add in your rexx code : 'RXP DEBUG'. For
+each RXP DEBUG command, the code will be stopped and you will be
+able to view or update variable content.
+
+FILTER varexpr varwhere - varexpr is a name of rexx variable with
+the record and varwhere is a name of rexx variable with a rexx
+expression (any rexx function can be used)
+
+For FILTER parameter, the RXP builds a inline rexx code to select
+record, the code is something like this :
+
+do forever
+        <read_dataset_record>
+        varexpr = <dataset_record>
+        if varwhere then do
+               <move_record_to_new_stem_item>
+               _selected=_selected+1
+        end
+end
+
+Example #1 :
+
+sexpr='recds1'
+swhere="substr(recds1,5,1)='X'"
+'RXP READ dds.data(recctl) STEM data. FILTER sexpr swhere'
+
+In code above, the RXP will select records with a character X in
+position 5. The recds1a is an internal RXP rexx variable who will
+receive the data record.
+
+Example #2 :
+
+sexpr='recdata'
+swhere="index(recdata,'DANIEL')\=0 | index(recdata,'JOAQUIM')\=0"
+'RXP READ dds.data(recctl) STEM data. FILTER sexpr swhere'
+
+In code #2, the RXP will select records with containing strings
+DANIEL and JOAQUIM.
+
+There are some examples in EXEC dataset available in package.
+
+I hope I have clarified a little more about my tool.. :)
+
+Thank you
+Dan Gaeta
+
