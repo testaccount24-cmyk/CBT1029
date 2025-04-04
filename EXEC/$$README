@@ -1,0 +1,17 @@
+Hi Sam,
+
+I just want to share a small "toolbox" that I have been used for years.
+The RXP was written in C language and has different actions :
+
+- read/write sequential datasets with internal alloc/free
+- read/write/update/delete VSAM records (KSDS/ESDS/RRDS)
+- copy stem variables to stack and vice versa
+- debug rexx variables allowing update of values
+
+I have used this tool for internal procedures in my test and production
+environment. Some features are insteresting and can be useful.
+
+There are some examples in EXEC dataset.
+
+Enjoy,
+Daniel Gaeta

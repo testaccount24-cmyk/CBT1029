@@ -1,0 +1,15 @@
+/* rexx */
+queue 'record1'
+queue 'record2'
+queue 'record3'
+queue 'record4'
+'RXP S2M LL.'
+do i=1 to ll.0
+  say 'data=' ll.i
+end
+'RXP M2S ll.'
+do queued()
+  parse pull s
+  say 'stack='s
+end
+exit

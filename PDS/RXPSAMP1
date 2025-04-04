@@ -1,0 +1,16 @@
+/* REXX */
+A=1
+B='DANIEL'
+C=1200
+A.0=3
+A.1='ITEM1'
+A.2='ITEM2'
+A.3='ITEM3'
+'RXP DEBUG'
+SAY 'A=' A
+SAY 'B=' B
+SAY 'C=' C
+DO I=1 TO A.0
+  SAY 'STEM A.'I'='A.I
+END
+EXIT
